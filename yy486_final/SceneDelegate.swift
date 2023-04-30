@@ -7,10 +7,40 @@
 
 import UIKit
 
+extension UIImage {
+    enum ContentMode {
+        case contentFill
+        case contentAspectFill
+        case contentAspectFit
+    }
+    
+    func resize(withSize size: CGSize, contentMode: ContentMode = .contentAspectFill) -> UIImage? {
+        let aspectWidth = size.width / self.size.width
+        let aspectHeight = size.height / self.size.height
+        
+        switch contentMode {
+        case .contentFill:
+            return resize(withSize: size)
+        case .contentAspectFit:
+            let aspectRatio = min(aspectWidth, aspectHeight)
+            return resize(withSize: CGSize(width: self.size.width * aspectRatio, height: self.size.height * aspectRatio))
+        case .contentAspectFill:
+            let aspectRatio = max(aspectWidth, aspectHeight)
+            return resize(withSize: CGSize(width: self.size.width * aspectRatio, height: self.size.height * aspectRatio))
+        }
+    }
+    
+    private func resize(withSize size: CGSize) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, self.scale)
+        defer { UIGraphicsEndImageContext() }
+        draw(in: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+}
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -19,8 +49,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         self.window = window
-        window.rootViewController = UINavigationController(rootViewController: ViewController())
+        
+        let tabBarController = UITabBarController()
+        tabBarController.tabBar.backgroundColor = .white
+        let vc1 = ViewController()
+        let vc2 = setUpViewController(title: "Orders", backgroundColor: UIColor(red: 0.77, green: 0.87, blue: 0.96, alpha: 1.00), image: "order")
+        let vc3 = setUpViewController(title: "Sales", backgroundColor: UIColor(red: 0.76, green: 0.88, blue: 0.77, alpha: 1.00), image: "sale")
+        let vc4 = setUpViewController(title: "Account", backgroundColor: UIColor(red: 0.83, green: 0.77, blue: 0.98, alpha: 1.00), image: "account")
+        
+        vc1.tabBarItem.image = UIImage(named: "shop")?.resize(withSize: CGSize(width: 21, height: 21), contentMode: .contentAspectFill)
+        vc2.tabBarItem.image = UIImage(named: "order")?.resize(withSize: CGSize(width: 25, height: 25), contentMode: .contentAspectFill)
+        vc3.tabBarItem.image = UIImage(named: "sale")?.resize(withSize: CGSize(width: 25, height: 25), contentMode: .contentAspectFill)
+        vc4.tabBarItem.image = UIImage(named: "account")?.resize(withSize: CGSize(width: 21, height: 21), contentMode: .contentAspectFill)
+        tabBarController.viewControllers = [vc1, vc2, vc3, vc4]
+        
+        window.rootViewController = UINavigationController(rootViewController:tabBarController)
         window.makeKeyAndVisible()
+    }
+    
+    func setUpViewController(title: String, backgroundColor: UIColor, image: String) -> UIViewController {
+        let vc = UIViewController()
+        vc.view.backgroundColor = backgroundColor
+        vc.tabBarItem.title = title
+        return vc
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
