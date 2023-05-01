@@ -5,8 +5,28 @@
 //  Created by AshtonBlade on 2023-04-30.
 //
 
+
 import Foundation
 import UIKit
+
+//Add paddings for UITextField requires overriding the class
+//code snippet source: https://www.advancedswift.com/uitextfield-with-padding-swift/
+class TextFieldWithPadding: UITextField {
+    var textPadding = UIEdgeInsets(
+        top: 10,
+        left: 20,
+        bottom: 10,
+        right: 20
+    )
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.textRect(forBounds: bounds)
+        return rect.inset(by: textPadding)
+    }
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.editingRect(forBounds: bounds)
+        return rect.inset(by: textPadding)
+    }
+}
 
 class CreateOrderViewController: UIViewController {
     let orderLabel = UILabel()
@@ -16,6 +36,12 @@ class CreateOrderViewController: UIViewController {
     let dateLabel = UILabel()
     let placeLabel = UILabel()
     let infoLabel = UILabel()
+    let numberLabel = UILabel()
+    let numberField = TextFieldWithPadding()
+    let noteLabel = UILabel()
+    let noteField = TextFieldWithPadding()
+    let tipView = UITextView()
+    
     let stackView = UIStackView()
     let saveButton = UIButton()
     
@@ -48,14 +74,6 @@ class CreateOrderViewController: UIViewController {
         merchLabel.numberOfLines = 0
         merchLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        descrView.font = UIFont.systemFont(ofSize: 15)
-        descrView.translatesAutoresizingMaskIntoConstraints = false
-        descrView.text = merch?.description
-        descrView.isScrollEnabled = false
-        descrView.isEditable = false
-        descrView.backgroundColor = .clear
-        descrView.textContainer.lineFragmentPadding = 0;
-        
         priceLabel.font = UIFont.systemFont(ofSize: 15, weight: .heavy)
         priceLabel.text = "Price: unknown $"
         if let p = merch?.price {
@@ -69,14 +87,64 @@ class CreateOrderViewController: UIViewController {
         infoLabel.textColor = mildBlue
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        dateLabel.font = UIFont.systemFont(ofSize: 12, weight: .heavy)
+        dateLabel.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
         dateLabel.text = "Pickup Time: "+(merch?.pickupTime)!
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        placeLabel.font = UIFont.systemFont(ofSize: 12, weight: .heavy)
+        placeLabel.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
         placeLabel.text = "Pickup Place: "+(merch?.pickupPlace)!
         placeLabel.translatesAutoresizingMaskIntoConstraints = false
-
+        
+        numberLabel.font = UIFont.systemFont(ofSize: 18, weight: .heavy)
+        numberLabel.text = "How many are you ordering?"
+        numberLabel.textColor = mildBlue
+        numberLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        numberField.placeholder = "Enter a number"
+        numberField.layer.cornerRadius = 20.0
+        numberField.layer.borderWidth = 1.0
+        numberField.layer.borderColor = UIColor.lightGray.cgColor
+        numberField.backgroundColor = UIColor.white
+        numberField.font = .systemFont(ofSize: 15)
+        numberField.translatesAutoresizingMaskIntoConstraints = false
+        
+        noteLabel.font = UIFont.systemFont(ofSize: 18, weight: .heavy)
+        noteLabel.text = "How are you going to pay?"
+        noteLabel.textColor = mildBlue
+        noteLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        noteField.placeholder = "Enter your venmo handle"
+        noteField.layer.cornerRadius = 20.0
+        noteField.layer.borderWidth = 1.0
+        noteField.layer.borderColor = UIColor.lightGray.cgColor
+        noteField.backgroundColor = UIColor.white
+        noteField.font = .systemFont(ofSize: 15)
+        noteField.translatesAutoresizingMaskIntoConstraints = false
+        
+        descrView.font = UIFont.systemFont(ofSize: 14)
+        descrView.translatesAutoresizingMaskIntoConstraints = false
+        descrView.text = merch?.description
+        descrView.isScrollEnabled = false
+        descrView.isEditable = false
+        descrView.backgroundColor = .clear
+        descrView.textContainer.lineFragmentPadding = 0;
+        
+        tipView.font = UIFont.systemFont(ofSize: 12)
+        tipView.textColor = .gray
+        tipView.translatesAutoresizingMaskIntoConstraints = false
+        tipView.text = "*This app will not make any transactions. You need to venmo the merchant on your own. If the merchant received the money, your order will be updated as \"payment verified\"."
+        tipView.isScrollEnabled = false
+        tipView.isEditable = false
+        tipView.backgroundColor = .clear
+        tipView.textContainer.lineFragmentPadding = 0;
+        
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight:.heavy)
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        saveButton.backgroundColor = purple
+        saveButton.layer.cornerRadius = 10
+        saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
+        
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .leading
         stackView.spacing = 10
@@ -89,13 +157,13 @@ class CreateOrderViewController: UIViewController {
         stackView.addArrangedSubview(infoLabel)
         stackView.addArrangedSubview(dateLabel)
         stackView.addArrangedSubview(placeLabel)
+        stackView.addArrangedSubview(numberLabel)
+        stackView.addArrangedSubview(numberField)
+        stackView.addArrangedSubview(noteLabel)
+        stackView.addArrangedSubview(noteField)
+        stackView.addArrangedSubview(tipView)
+        
         view.addSubview(stackView)
-
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-        saveButton.backgroundColor = .systemBlue
-        saveButton.layer.cornerRadius = 15
-        saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
         view.addSubview(saveButton)
 
         setupConstraints()
@@ -111,14 +179,13 @@ class CreateOrderViewController: UIViewController {
     func setupConstraints() {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
-//            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -500),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25)
         ])
 
         NSLayoutConstraint.activate([
-            saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            saveButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
+            saveButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 10),
             saveButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5)
         ])
     }
@@ -145,40 +212,7 @@ protocol CreateOrderDelegate: UIViewController {
 
 
 
-class TextFieldWithPadding: UITextField {
-    var textPadding = UIEdgeInsets(
-        top: 5,
-        left: 10,
-        bottom: 5,
-        right: 10
-    )
-    
-    //Add paddings for UITextField requires overriding the class
-    //https://www.advancedswift.com/uitextfield-with-padding-swift/
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
-        let rect = super.textRect(forBounds: bounds)
-        return rect.inset(by: textPadding)
-    }
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        let rect = super.editingRect(forBounds: bounds)
-        return rect.inset(by: textPadding)
-    }
-    
-    //Add bottom border for UITextField
-    //https://gist.github.com/29satnam/5e88bc9203b04b68296d23b85a14efe1
-    var bottomBorder = UIView()
-    override func awakeFromNib() {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        bottomBorder = UIView.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        bottomBorder.backgroundColor = UIColor(red: 0.45, green: 0.97, blue: 0.81, alpha: 1.00)
-        bottomBorder.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(bottomBorder)
-        bottomBorder.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        bottomBorder.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        bottomBorder.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        bottomBorder.heightAnchor.constraint(equalToConstant: 1).isActive = true // Set Border-Strength
-    }
-}
+
 
 
 

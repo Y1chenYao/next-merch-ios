@@ -10,11 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let welcomeLabel = UILabel()
     let merchTableView = UITableView()
     let merchReuseIdentifier = "merchReuseIdentifier"
 
     let addMessageButton = UIBarButtonItem()
     let refreshControl = UIRefreshControl()
+    let purple = UIColor(red: 0.44, green: 0.41, blue: 0.95, alpha: 1.00)
 
     var shownMerchData: [Merch] = []
     
@@ -25,7 +27,13 @@ class ViewController: UIViewController {
 //        url.append(queryItems: [formatParameter])
 
         super.viewDidLoad()
-        title = "Shop"
+        view.backgroundColor = .white
+        
+        welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
+        welcomeLabel.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
+        welcomeLabel.textColor = purple
+        welcomeLabel.text = "On Sale"
+        view.addSubview(welcomeLabel)
 
         merchTableView.translatesAutoresizingMaskIntoConstraints = false
         merchTableView.separatorStyle = .none
@@ -36,27 +44,26 @@ class ViewController: UIViewController {
 
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
 
-//        if #available(iOS 10.0, *) {
-//            merchTableView.refreshControl = refreshControl
-//        } else {
-//            merchTableView.addSubview(refreshControl)
-//        }
-
-//        addMessageButton.image = UIImage(systemName: "plus.message")
-//        addMessageButton.target = self
-//        addMessageButton.action = #selector(pushMessageView)
-//        navigationItem.rightBarButtonItem = addMessageButton
+        if #available(iOS 10.0, *) {
+            merchTableView.refreshControl = refreshControl
+        } else {
+            merchTableView.addSubview(refreshControl)
+        }
 
         initiateData()
         setupConstraints()
         
-        //only for debugging purposes
         UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
     }
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            merchTableView.topAnchor.constraint(equalTo: view.topAnchor),
+            welcomeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20),
+            welcomeLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+        ])
+        
+        NSLayoutConstraint.activate([
+            merchTableView.topAnchor.constraint(equalTo:welcomeLabel.bottomAnchor, constant: 10),
             merchTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             merchTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             merchTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -78,13 +85,14 @@ class ViewController: UIViewController {
     }
 
     @objc func refreshData() {
-        NetworkManager.shared.getAllMerch { allMerch in
-            DispatchQueue.main.async {
-                self.shownMerchData = allMerch
-                self.merchTableView.reloadData()
-                self.refreshControl.endRefreshing()
-            }
-        }
+//        NetworkManager.shared.getAllMerch { allMerch in
+//            DispatchQueue.main.async {
+//                self.shownMerchData = allMerch
+//                self.merchTableView.reloadData()
+//                self.refreshControl.endRefreshing()
+//            }
+//        }
+        self.refreshControl.endRefreshing()
     }
 
 

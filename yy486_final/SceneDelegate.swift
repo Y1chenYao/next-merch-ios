@@ -43,25 +43,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         self.window = window
         
         let tabBarController = UITabBarController()
         tabBarController.tabBar.backgroundColor = .white
+        tabBarController.tabBar.tintColor = UIColor(red: 0.44, green: 0.41, blue: 0.95, alpha: 1.00)
         let vc1 = ViewController()
-        let vc2 = setUpViewController(title: "Orders", backgroundColor: UIColor(red: 0.77, green: 0.87, blue: 0.96, alpha: 1.00), image: "order")
-        let vc3 = setUpViewController(title: "Sales", backgroundColor: UIColor(red: 0.76, green: 0.88, blue: 0.77, alpha: 1.00), image: "sale")
-        let vc4 = setUpViewController(title: "Account", backgroundColor: UIColor(red: 0.83, green: 0.77, blue: 0.98, alpha: 1.00), image: "account")
+        vc1.tabBarItem.title = "Shop"
+        let vc2 = AccountViewController()
+        vc2.tabBarItem.title = "Account"
         
         vc1.tabBarItem.image = UIImage(named: "shop")?.resize(withSize: CGSize(width: 21, height: 21), contentMode: .contentAspectFill)
-        vc2.tabBarItem.image = UIImage(named: "order")?.resize(withSize: CGSize(width: 25, height: 25), contentMode: .contentAspectFill)
-        vc3.tabBarItem.image = UIImage(named: "sale")?.resize(withSize: CGSize(width: 25, height: 25), contentMode: .contentAspectFill)
-        vc4.tabBarItem.image = UIImage(named: "account")?.resize(withSize: CGSize(width: 21, height: 21), contentMode: .contentAspectFill)
-        tabBarController.viewControllers = [vc1, vc2, vc3, vc4]
+        vc2.tabBarItem.image = UIImage(named: "account")?.resize(withSize: CGSize(width: 21, height: 21), contentMode: .contentAspectFill)
+        tabBarController.viewControllers = [vc1, vc2]
         
         window.rootViewController = UINavigationController(rootViewController:tabBarController)
         window.makeKeyAndVisible()

@@ -18,6 +18,7 @@
 		C81B48AE29FEFCA2004DC3F3 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81B48AD29FEFCA2004DC3F3 /* NetworkManager.swift */; };
 		C81B48B029FF0037004DC3F3 /* CreateOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81B48AF29FF0037004DC3F3 /* CreateOrderViewController.swift */; };
 		C81B48B229FF01F1004DC3F3 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81B48B129FF01F1004DC3F3 /* Order.swift */; };
+		C81B48B42A0024C6004DC3F3 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81B48B32A0024C6004DC3F3 /* AccountViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		C81B48AD29FEFCA2004DC3F3 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		C81B48AF29FF0037004DC3F3 /* CreateOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderViewController.swift; sourceTree = "<group>"; };
 		C81B48B129FF01F1004DC3F3 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		C81B48B32A0024C6004DC3F3 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,10 +70,11 @@
 			children = (
 				C81B489529FEF38C004DC3F3 /* AppDelegate.swift */,
 				C81B489729FEF38C004DC3F3 /* SceneDelegate.swift */,
-				C81B489929FEF38C004DC3F3 /* ViewController.swift */,
 				C81B48A929FEF7B6004DC3F3 /* Merch.swift */,
 				C81B48B129FF01F1004DC3F3 /* Order.swift */,
 				C81B48AB29FEFB64004DC3F3 /* MerchTableViewCell.swift */,
+				C81B48B32A0024C6004DC3F3 /* AccountViewController.swift */,
+				C81B489929FEF38C004DC3F3 /* ViewController.swift */,
 				C81B48AF29FF0037004DC3F3 /* CreateOrderViewController.swift */,
 				C81B489B29FEF38C004DC3F3 /* Main.storyboard */,
 				C81B489E29FEF38D004DC3F3 /* Assets.xcassets */,
@@ -153,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C81B48B42A0024C6004DC3F3 /* AccountViewController.swift in Sources */,
 				C81B48AE29FEFCA2004DC3F3 /* NetworkManager.swift in Sources */,
 				C81B48AC29FEFB64004DC3F3 /* MerchTableViewCell.swift in Sources */,
 				C81B48B229FF01F1004DC3F3 /* Order.swift in Sources */,
