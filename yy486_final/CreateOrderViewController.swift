@@ -23,16 +23,87 @@ class CreateOrderViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = .white
+
+        messageTextView.text = "placeholder"
+        messageTextView.translatesAutoresizingMaskIntoConstraints = false
+        messageTextView.clipsToBounds = true
+        messageTextView.layer.cornerRadius = 5
+        messageTextView.backgroundColor = .systemGray4
+        messageTextView.font = .systemFont(ofSize: 15)
+        view.addSubview(messageTextView)
+
+        posterTextField.placeholder = "placeholder"
+        posterTextField.translatesAutoresizingMaskIntoConstraints = false
+        posterTextField.clipsToBounds = true
+        posterTextField.layer.cornerRadius = 5
+        posterTextField.backgroundColor = .systemGray4
+        posterTextField.font = .systemFont(ofSize: 20)
+        view.addSubview(posterTextField)
+
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        saveButton.backgroundColor = .systemBlue
+        saveButton.layer.cornerRadius = 15
+        saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
+        view.addSubview(saveButton)
+
+        setupConstraints()
+    }
+    
+    @objc func saveAction() {
+//        let body = messageTextView.text!
+//        let poster = posterTextField.text!
+        print("not implemented")
+    }
+    
+
+    func setupConstraints() {
+        let widthMultiplier: CGFloat = 0.75
+
+        NSLayoutConstraint.activate([
+            messageTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            messageTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            messageTextView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: widthMultiplier),
+            messageTextView.heightAnchor.constraint(equalTo: view.widthAnchor)
+        ])
+
+        NSLayoutConstraint.activate([
+            posterTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            posterTextField.topAnchor.constraint(equalTo: messageTextView.bottomAnchor, constant: 20),
+            posterTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: widthMultiplier)
+        ])
+
+        NSLayoutConstraint.activate([
+            saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            saveButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            saveButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5)
+        ])
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
+
+
 
 
 protocol CreateOrderDelegate: UIViewController {
     //buyerid stored locally
     func createOrder(merchid:Int, buyerNote: String, numberItems: Int)
 }
+
+
+
+
+
+
+
 
 
 class TextFieldWithPadding: UITextField {
