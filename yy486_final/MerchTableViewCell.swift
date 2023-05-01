@@ -20,7 +20,6 @@ class MerchTableViewCell: UITableViewCell {
     //palatte
     let purple = UIColor(red: 0.44, green: 0.41, blue: 0.95, alpha: 1.00)
     let mildBlue = UIColor(red: 0.46, green: 0.56, blue: 0.97, alpha: 1.00)
-    let purpleRed = UIColor(red: 0.52, green: 0.18, blue: 0.57, alpha: 1.00)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -129,17 +128,12 @@ class MerchTableViewCell: UITableViewCell {
             contentView.addSubview(imageView)
         default:
             print("hehe")
-
         }
-        
-        
-        
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 

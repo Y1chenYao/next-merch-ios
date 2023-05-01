@@ -8,7 +8,6 @@
 import UIKit
 
 
-
 class ViewController: UIViewController {
 
     let merchTableView = UITableView()
