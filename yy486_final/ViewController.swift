@@ -9,18 +9,15 @@ import UIKit
 
 
 class ViewController: UIViewController {
-
+    let purple = UIColor(red: 0.44, green: 0.41, blue: 0.95, alpha: 1.00)
     let welcomeLabel = UILabel()
+    let testButton = UIButton()
     let merchTableView = UITableView()
     let merchReuseIdentifier = "merchReuseIdentifier"
 
-    let addMessageButton = UIBarButtonItem()
     let refreshControl = UIRefreshControl()
-    let purple = UIColor(red: 0.44, green: 0.41, blue: 0.95, alpha: 1.00)
-
     var shownMerchData: [Merch] = []
     
-
     override func viewDidLoad() {
 //        var url = URL(string: "http://34.85.172.228/")!
 //        let formatParameter = URLQueryItem(name: "format", value: "json")
@@ -54,6 +51,12 @@ class ViewController: UIViewController {
         setupConstraints()
         
         UserDefaults.standard.set(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+    }
+    
+    @objc func saveAction() {
+//        let body = messageTextView.text!
+//        let poster = posterTextField.text!
+        print("not implemented")
     }
 
     func setupConstraints() {
@@ -94,11 +97,6 @@ class ViewController: UIViewController {
 //        }
         self.refreshControl.endRefreshing()
     }
-
-
-//    @objc func pushMerchView() {
-//        navigationController?.pushViewController(CreateMerchViewController(delegate: self), animated: true)
-//    }
 
     func presentView(merch:Merch) {
         present(CreateOrderViewController(merch:merch,delegate:self),animated: true)
@@ -147,14 +145,7 @@ extension ViewController: CreateOrderDelegate {
     }
 }
 
-//extension ViewController: UpdateMessageDelegate {
-//    func updateMessage(message: String, sender: String, tnetid: String, id: Int) {
-//        NetworkManager.shared.updateMessage(body: message, sender: sender, tnetid: tnetid, id: id, completion: {message in
-//            print("successfully updated the post")
-//            self.refreshData()
-//        })
-//    }
-//}
+//TODO CreateMerchDelegate
 
 
 
