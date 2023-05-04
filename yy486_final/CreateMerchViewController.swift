@@ -8,7 +8,11 @@
 import Foundation
 import UIKit
 
-
+extension UITextView {
+    func leftSpace() {
+        self.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+}
 
 class CreateMerchViewController: UIViewController {
     init() {
@@ -159,6 +163,7 @@ class CreateMerchViewController: UIViewController {
         descrView.layer.borderWidth = 1.0
         descrView.layer.cornerRadius = 5.0
         descrView.widthAnchor.constraint(equalToConstant: 350).isActive = true
+        descrView.leftSpace()
         
         saveButton.setTitle("Submit", for: .normal)
         saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight:.heavy)

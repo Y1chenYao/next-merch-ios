@@ -149,7 +149,7 @@ class AccountViewController: UIViewController {
         button03.backgroundColor = blue
         button03.layer.cornerRadius = 15
         button03.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        button03.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
+        button03.addTarget(self, action: #selector(createMerch), for: .touchUpInside)
         
         stackView03.translatesAutoresizingMaskIntoConstraints = false
         stackView03.alignment = .leading
@@ -175,7 +175,7 @@ class AccountViewController: UIViewController {
         logoutButton.backgroundColor = blurWhite
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         logoutButton.layer.cornerRadius = 10
-        logoutButton.addTarget(self, action: #selector(createMerch), for: .touchUpInside)
+        logoutButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
         
         view.addSubview(stackView01)
         view.addSubview(stackView02)
