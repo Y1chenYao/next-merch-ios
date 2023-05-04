@@ -45,6 +45,9 @@ class CreateOrderViewController: UIViewController {
     let stackView = UIStackView()
     let saveButton = UIButton()
     
+    let scrollView = UIScrollView()
+    let whiteSpace = UILabel()
+    
     //palatte
     let purple = UIColor(red: 0.44, green: 0.41, blue: 0.95, alpha: 1.00)
     let mildBlue = UIColor(red: 0.46, green: 0.56, blue: 0.97, alpha: 1.00)
@@ -162,9 +165,19 @@ class CreateOrderViewController: UIViewController {
         stackView.addArrangedSubview(noteLabel)
         stackView.addArrangedSubview(noteField)
         stackView.addArrangedSubview(tipView)
+        stackView.addArrangedSubview(saveButton)
+        stackView.addArrangedSubview(whiteSpace)
         
-        view.addSubview(stackView)
-        view.addSubview(saveButton)
+        whiteSpace.text = "   "
+        whiteSpace.translatesAutoresizingMaskIntoConstraints = false
+        
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.showsVerticalScrollIndicator = false
+        
+        scrollView.addSubview(stackView)
+        view.addSubview(scrollView)
+        
 
         setupConstraints()
     }
@@ -178,15 +191,29 @@ class CreateOrderViewController: UIViewController {
 
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25)
+            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
         NSLayoutConstraint.activate([
-            saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            saveButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 10),
-            saveButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5)
+            saveButton.widthAnchor.constraint(equalToConstant: 200)
+        ])
+
+        NSLayoutConstraint.activate([
+            whiteSpace.topAnchor.constraint(equalTo: saveButton.bottomAnchor),
+            whiteSpace.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            whiteSpace.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            whiteSpace.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
     
