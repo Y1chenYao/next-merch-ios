@@ -175,7 +175,7 @@ class AccountViewController: UIViewController {
         logoutButton.backgroundColor = blurWhite
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         logoutButton.layer.cornerRadius = 10
-        logoutButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
+        logoutButton.addTarget(self, action: #selector(createMerch), for: .touchUpInside)
         
         view.addSubview(stackView01)
         view.addSubview(stackView02)
@@ -189,6 +189,10 @@ class AccountViewController: UIViewController {
 //        let body = messageTextView.text!
 //        let poster = posterTextField.text!
         print("logout not implemented")
+    }
+    
+    @objc func createMerch(){
+        present(CreateMerchViewController(),animated: true)
     }
     
     func setupConstraints(){
