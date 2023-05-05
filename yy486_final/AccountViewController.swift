@@ -77,8 +77,9 @@ class AccountViewController: UIViewController {
         let myLabel01:UILabel = UILabel(frame: CGRectMake(7, 200, 370, 100))
         myLabel01.lineBreakMode = NSLineBreakMode.byWordWrapping
         myLabel01.numberOfLines = 0
-        myLabel01.text = "View my\nmerch purchases"
-        myLabel01.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+        myLabel01.text = "View My\nMerch Orders"
+        myLabel01.textColor = purple
+        myLabel01.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         myLabel01.translatesAutoresizingMaskIntoConstraints = false
         
         button01.setTitle("GO", for: .normal)
@@ -94,7 +95,7 @@ class AccountViewController: UIViewController {
         stackView01.distribution = .equalSpacing
         stackView01.axis = .vertical
         stackView01.customize(backgroundColor: blurWhite, radiusSize: 8)
-        stackView01.layoutMargins = UIEdgeInsets(top: 35, left: 170, bottom: 35, right: 0)
+        stackView01.layoutMargins = UIEdgeInsets(top: 40, left: 170, bottom: 35, right: 0)
         stackView01.isLayoutMarginsRelativeArrangement = true
         
         let imageView01 = UIImageView(frame: CGRect(x: 20, y: 15, width: 130, height: 130))
@@ -108,8 +109,9 @@ class AccountViewController: UIViewController {
         let myLabel02:UILabel = UILabel(frame: CGRectMake(7, 200, 370, 100))
         myLabel02.lineBreakMode = NSLineBreakMode.byWordWrapping
         myLabel02.numberOfLines = 0
-        myLabel02.text = "View orders\nfrom customers"
-        myLabel02.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+        myLabel02.text = "View Orders\nFrom Customers"
+        myLabel02.textColor = purple
+        myLabel02.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         myLabel02.translatesAutoresizingMaskIntoConstraints = false
         
         button02.setTitle("GO", for: .normal)
@@ -125,7 +127,7 @@ class AccountViewController: UIViewController {
         stackView02.distribution = .equalSpacing
         stackView02.axis = .vertical
         stackView02.customize(backgroundColor: blurWhite, radiusSize: 8)
-        stackView02.layoutMargins = UIEdgeInsets(top: 35, left: 170, bottom: 35, right: 0)
+        stackView02.layoutMargins = UIEdgeInsets(top: 40, left: 170, bottom: 35, right: 0)
         stackView02.isLayoutMarginsRelativeArrangement = true
         
         let imageView02 = UIImageView(frame: CGRect(x: 20, y: 30, width: 130, height: 90))
@@ -139,8 +141,9 @@ class AccountViewController: UIViewController {
         let myLabel03:UILabel = UILabel(frame: CGRectMake(7, 200, 370, 100))
         myLabel03.lineBreakMode = NSLineBreakMode.byWordWrapping
         myLabel03.numberOfLines = 0
-        myLabel03.text = "Create merch\nfor sale"
-        myLabel03.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+        myLabel03.text = "Create \nMerch For Sale"
+        myLabel03.textColor = purple
+        myLabel03.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         myLabel03.translatesAutoresizingMaskIntoConstraints = false
         
         button03.setTitle("GO", for: .normal)
@@ -156,7 +159,7 @@ class AccountViewController: UIViewController {
         stackView03.distribution = .equalSpacing
         stackView03.axis = .vertical
         stackView03.customize(backgroundColor: blurWhite, radiusSize: 8)
-        stackView03.layoutMargins = UIEdgeInsets(top: 35, left: 170, bottom: 35, right: 0)
+        stackView03.layoutMargins = UIEdgeInsets(top: 40, left: 170, bottom: 35, right: 0)
         stackView03.isLayoutMarginsRelativeArrangement = true
         
         let imageView03 = UIImageView(frame: CGRect(x: 20, y: 15, width: 130, height: 130))
@@ -169,7 +172,7 @@ class AccountViewController: UIViewController {
         
         //FOOTER
         let logoutRed = UIColor(red: 0.97, green: 0.38, blue: 0.42, alpha: 1.00)
-        logoutButton.setTitle("Log me out", for: .normal)
+        logoutButton.setTitle("Log Out", for: .normal)
         logoutButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight:.heavy)
         logoutButton.setTitleColor(logoutRed, for: .normal)
         logoutButton.backgroundColor = blurWhite

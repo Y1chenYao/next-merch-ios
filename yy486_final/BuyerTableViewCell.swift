@@ -138,7 +138,7 @@ class BuyerTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            deleteButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -45),
+            deleteButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -42),
             deleteButton.widthAnchor.constraint(equalToConstant: 100)
         ])
     }
@@ -167,10 +167,11 @@ class BuyerTableViewCell: UITableViewCell {
 
         
         //TODO: add get request here by mid
-        //sample merch
         let merchObject = Merch(id:1, sid: 1, name: "Matcha Cookie", generalType: "Food", description: "Matcha Cookies are soft and chewy sugar cookies with a beautiful bright matcha green tea flavor.", price: 3, pickupTime: "Apr30 1-5pm", pickupPlace: "Upson Hall")
+        
+        
+        //render order with merch info
         if let idx = orderObject.id {
-            // Successfully converted String to Int
             merchLabel.text = merchObject.name + " Order #" + String(idx)
         }else{
             merchLabel.text = merchObject.name + " Order #undefined"
@@ -200,8 +201,16 @@ class BuyerTableViewCell: UITableViewCell {
             let image = UIImage(named: "svg3")
             imageView.image = image
             contentView.addSubview(imageView)
+        case "Concert":
+            let imageView = UIImageView(frame: CGRect(x: 230, y: 30, width: 250, height: 170))
+            let image = UIImage(named: "svg4")
+            imageView.image = image
+            contentView.addSubview(imageView)
         default:
-            print("hehe")
+            let imageView = UIImageView(frame: CGRect(x: 225, y: 35, width: 210, height: 145))
+            let image = UIImage(named: "svg5")
+            imageView.image = image
+            contentView.addSubview(imageView)
         }
     }
     

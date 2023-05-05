@@ -110,6 +110,7 @@ class MerchTableViewCell: UITableViewCell {
         generalType = merchObject.generalType
         
         //svg credit: Outdoors illustrations by Storyset
+        //5 categories: food, clothing, show, concert, other(default)
         switch generalType {
         case "Food":
             let imageView = UIImageView(frame: CGRect(x: 240, y: 20, width: 170, height: 170))
@@ -126,8 +127,16 @@ class MerchTableViewCell: UITableViewCell {
             let image = UIImage(named: "svg3")
             imageView.image = image
             contentView.addSubview(imageView)
+        case "Concert":
+            let imageView = UIImageView(frame: CGRect(x: 230, y: 30, width: 250, height: 170))
+            let image = UIImage(named: "svg4")
+            imageView.image = image
+            contentView.addSubview(imageView)
         default:
-            print("hehe")
+            let imageView = UIImageView(frame: CGRect(x: 225, y: 35, width: 210, height: 145))
+            let image = UIImage(named: "svg5")
+            imageView.image = image
+            contentView.addSubview(imageView)
         }
     }
 
