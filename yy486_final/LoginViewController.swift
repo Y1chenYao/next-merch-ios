@@ -9,17 +9,29 @@ import UIKit
 
 class LoginController: UIViewController{
     
+    let gradient: CAGradientLayer = CAGradientLayer()
+    let mildBlue = UIColor(red: 0.71, green: 0.87, blue: 0.94, alpha: 1.00)
+    let mildPink = UIColor(red: 0.96, green: 0.76, blue: 0.96, alpha: 1.00)
+    let mildPurple = UIColor(red: 0.77, green: 0.65, blue: 0.98, alpha: 1.00)
+    let mint = UIColor(red: 0.45, green: 0.97, blue: 0.81, alpha: 1.00)
+    let purple = UIColor(red: 0.44, green: 0.41, blue: 0.95, alpha: 1.00)
+    
     let welcomeLabel01 = UILabel()
     let welcomeLabel02 = UILabel()
-//    let picImageView = UIImageView()
     let submitButton = UIButton()
+    let signupButton = UIButton()
+    let idField = TextFieldWithPadding()
+    let pwField = TextFieldWithPadding()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        picImageView.image = UIImage(named:"00")
-//        picImageView.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(picImageView)
+        gradient.colors = [mildBlue.cgColor, mildPurple.cgColor, mildPink.cgColor]
+        gradient.locations = [0.0,0.7, 1]
+        gradient.startPoint = CGPoint(x: 1, y: 0)
+        gradient.endPoint = CGPoint(x: 0, y: 1) // you need to play with 0.15 to adjust gradient vertically
+        gradient.frame = view.bounds
+        view.layer.addSublayer(gradient)
         
         welcomeLabel01.text = "Login to"
         welcomeLabel01.textColor = .white
@@ -27,22 +39,46 @@ class LoginController: UIViewController{
         welcomeLabel01.font = .boldSystemFont(ofSize: 30)
         view.addSubview(welcomeLabel01)
         
-        welcomeLabel02.text = "Unlock your PlaylistDB"
+        welcomeLabel02.text = "Unlock your Next Merch"
         welcomeLabel02.textColor = .white
         welcomeLabel02.translatesAutoresizingMaskIntoConstraints = false
         welcomeLabel02.font = .boldSystemFont(ofSize: 25)
         view.addSubview(welcomeLabel02)
         
+        idField.placeholder = "Enter user id"
+        idField.layer.cornerRadius = 20.0
+        idField.autocapitalizationType = .none
+        idField.backgroundColor = UIColor.white
+        idField.font = .systemFont(ofSize: 15)
+        idField.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(idField)
+        
+        pwField.placeholder = "Enter password"
+        pwField.layer.cornerRadius = 20.0
+        pwField.autocapitalizationType = .none
+        pwField.backgroundColor = UIColor.white
+        pwField.font = .systemFont(ofSize: 15)
+        pwField.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(pwField)
+        
         submitButton.setTitle("Login", for: .normal)
-        submitButton.setTitleColor(UIColor(red: 0.45, green: 0.97, blue: 0.81, alpha: 1.00), for: .normal)
-        submitButton.titleLabel?.font = .boldSystemFont(ofSize: 18)
+        submitButton.setTitleColor(.white, for: .normal)
+        submitButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         submitButton.addTarget(self, action: #selector(login), for: .touchUpInside)
-        submitButton.layer.cornerRadius = 10
-        submitButton.layer.borderWidth = 1
-        submitButton.layer.borderColor = UIColor(red: 0.45, green: 0.97, blue: 0.81, alpha: 1.00).cgColor
-        submitButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        submitButton.layer.cornerRadius = 15
+        submitButton.backgroundColor = purple
         view.addSubview(submitButton)
+        
+        signupButton.setTitle("Sign Up", for: .normal)
+        signupButton.setTitleColor(.white, for: .normal)
+        signupButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
+        signupButton.translatesAutoresizingMaskIntoConstraints = false
+        signupButton.addTarget(self, action: #selector(login), for: .touchUpInside)
+        signupButton.layer.cornerRadius = 15
+        signupButton.layer.borderWidth = 1
+        signupButton.layer.borderColor = UIColor.white.cgColor
+        view.addSubview(signupButton)
 
         setupConstraints()
         
@@ -67,21 +103,38 @@ class LoginController: UIViewController{
     }
     
     func setupConstraints() {
-//        NSLayoutConstraint.activate([
-//            picImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            picImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:20)
-//        ])
         NSLayoutConstraint.activate([
-            welcomeLabel01.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant:20),
-            welcomeLabel01.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:20)
+            welcomeLabel01.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            welcomeLabel01.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant:20)
         ])
+        
         NSLayoutConstraint.activate([
             welcomeLabel02.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant:20),
             welcomeLabel02.topAnchor.constraint(equalTo: welcomeLabel01.bottomAnchor, constant:5)
         ])
+        
         NSLayoutConstraint.activate([
-            submitButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant:20),
-            submitButton.topAnchor.constraint(equalTo: welcomeLabel02.bottomAnchor, constant:20)
+            idField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant:20),
+            idField.topAnchor.constraint(equalTo: welcomeLabel02.bottomAnchor, constant:20),
+            idField.widthAnchor.constraint(equalToConstant: 200)
+        ])
+        
+        NSLayoutConstraint.activate([
+            pwField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant:20),
+            pwField.topAnchor.constraint(equalTo: idField.bottomAnchor, constant: 10),
+            pwField.widthAnchor.constraint(equalToConstant: 200)
+        ])
+        
+        NSLayoutConstraint.activate([
+            signupButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant:20),
+            signupButton.topAnchor.constraint(equalTo: pwField.bottomAnchor, constant:20),
+            signupButton.widthAnchor.constraint(equalToConstant: 130)
+        ])
+        
+        NSLayoutConstraint.activate([
+            submitButton.leadingAnchor.constraint(equalTo: signupButton.trailingAnchor, constant:10),
+            submitButton.topAnchor.constraint(equalTo: pwField.bottomAnchor, constant:20),
+            submitButton.widthAnchor.constraint(equalToConstant: 130)
         ])
         
     }
