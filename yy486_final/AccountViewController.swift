@@ -87,7 +87,7 @@ class AccountViewController: UIViewController {
         button01.backgroundColor = blue
         button01.layer.cornerRadius = 15
         button01.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        button01.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
+        button01.addTarget(self, action: #selector(pushBuyerView), for: .touchUpInside)
         
         stackView01.translatesAutoresizingMaskIntoConstraints = false
         stackView01.alignment = .leading
@@ -118,7 +118,7 @@ class AccountViewController: UIViewController {
         button02.backgroundColor = blue
         button02.layer.cornerRadius = 15
         button02.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        button02.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
+        button02.addTarget(self, action: #selector(pushSellerView), for: .touchUpInside)
         
         stackView02.translatesAutoresizingMaskIntoConstraints = false
         stackView02.alignment = .leading
@@ -175,7 +175,7 @@ class AccountViewController: UIViewController {
         logoutButton.backgroundColor = blurWhite
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         logoutButton.layer.cornerRadius = 10
-        logoutButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
+        logoutButton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
         
         view.addSubview(stackView01)
         view.addSubview(stackView02)
@@ -185,14 +185,23 @@ class AccountViewController: UIViewController {
         setupConstraints()
     }
     
-    @objc func saveAction() {
+    @objc func logOut() {
 //        let body = messageTextView.text!
 //        let poster = posterTextField.text!
-        print("logout not implemented")
+        UserDefaults.standard.set(false, forKey: "login")
+        self.view.window!.rootViewController = UINavigationController(rootViewController: LoginController())
     }
     
     @objc func createMerch(){
         present(CreateMerchViewController(),animated: true)
+    }
+    
+    @objc func pushBuyerView() {
+        navigationController?.pushViewController(BuyerViewController(), animated: true)
+    }
+    
+    @objc func pushSellerView() {
+        navigationController?.pushViewController(SellerViewController(), animated: true)
     }
     
     func setupConstraints(){

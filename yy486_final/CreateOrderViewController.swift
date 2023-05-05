@@ -112,11 +112,11 @@ class CreateOrderViewController: UIViewController {
         numberField.translatesAutoresizingMaskIntoConstraints = false
         
         noteLabel.font = UIFont.systemFont(ofSize: 18, weight: .heavy)
-        noteLabel.text = "How are you going to pay?"
+        noteLabel.text = "What is your venmo handle?"
         noteLabel.textColor = mildBlue
         noteLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        noteField.placeholder = "Enter your venmo handle"
+        noteField.placeholder = "e.g. @hello-world"
         noteField.layer.cornerRadius = 20.0
         noteField.layer.borderWidth = 1.0
         noteField.layer.borderColor = UIColor.lightGray.cgColor

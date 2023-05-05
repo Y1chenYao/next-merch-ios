@@ -43,24 +43,39 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
+        //basic
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         self.window = window
         
+        let purple = UIColor(red: 0.44, green: 0.41, blue: 0.95, alpha: 1.00)
+        UINavigationBar.appearance().tintColor = purple
+        
+        //set up tabBarController
         let tabBarController = UITabBarController()
         tabBarController.tabBar.backgroundColor = .white
-        tabBarController.tabBar.tintColor = UIColor(red: 0.44, green: 0.41, blue: 0.95, alpha: 1.00)
+        tabBarController.tabBar.tintColor = purple
         let vc1 = ViewController()
         vc1.tabBarItem.title = "Shop"
         let vc2 = AccountViewController()
         vc2.tabBarItem.title = "Account"
-        
         vc1.tabBarItem.image = UIImage(named: "shop")?.resize(withSize: CGSize(width: 21, height: 21), contentMode: .contentAspectFill)
         vc2.tabBarItem.image = UIImage(named: "account")?.resize(withSize: CGSize(width: 21, height: 21), contentMode: .contentAspectFill)
         tabBarController.viewControllers = [vc1, vc2]
         
-        window.rootViewController = UINavigationController(rootViewController:tabBarController)
-        window.makeKeyAndVisible()
+        //login
+        let login = UserDefaults.standard.bool(forKey: "login")
+        if(!login){
+            let viewController = LoginController()
+            window.rootViewController = UINavigationController(rootViewController: viewController)
+            self.window = window
+            window.makeKeyAndVisible()
+        }else{
+            window.rootViewController = UINavigationController(rootViewController:tabBarController)
+            self.window = window
+            window.makeKeyAndVisible()
+        }
     }
     
     func setUpViewController(title: String, backgroundColor: UIColor, image: String) -> UIViewController {

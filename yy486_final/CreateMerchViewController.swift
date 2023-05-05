@@ -100,11 +100,11 @@ class CreateMerchViewController: UIViewController {
         genreLabel.translatesAutoresizingMaskIntoConstraints = false
         
         noteLabel.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
-        noteLabel.text = "Payment Option"
+        noteLabel.text = "What is your venmo handle"
         noteLabel.textColor = purple
         noteLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        noteField.placeholder = "Enter your venmo handle"
+        noteField.placeholder = "e.g. @Hello-world"
         noteField.layer.cornerRadius = 20.0
         noteField.layer.borderWidth = 1.0
         noteField.layer.borderColor = UIColor.lightGray.cgColor
