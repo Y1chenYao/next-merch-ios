@@ -122,7 +122,7 @@ class MerchTableViewCell: UITableViewCell {
             let image = UIImage(named: "svg2")
             imageView.image = image
             contentView.addSubview(imageView)
-        case "Ticket":
+        case "Show":
             let imageView = UIImageView(frame: CGRect(x: 240, y: 20, width: 170, height: 170))
             let image = UIImage(named: "svg3")
             imageView.image = image

@@ -237,7 +237,8 @@ class CreateMerchViewController: UIViewController {
 
         if let price = p{
             if(!name.isEmpty && !note.isEmpty && !time.isEmpty && !place.isEmpty && !descr.isEmpty){
-                NetworkManager.shared.createMerch(price: price, name: name, general_type: general_type, description: descr, pick_up_time: time, pick_up_place: place) { (result:Result<Merch, Error>) in
+                let description = descr + "(Venmo: " + note + ")"
+                NetworkManager.shared.createMerch(price: price, name: name, general_type: general_type, description: description, pick_up_time: time, pick_up_place: place) { (result:Result<Merch, Error>) in
                     switch result{
                         case .success(_):
                             DispatchQueue.main.async {

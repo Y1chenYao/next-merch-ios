@@ -22,9 +22,15 @@ class NetworkManager {
 
     static let shared = NetworkManager()
 
-    var userURL = URL(string: "http://127.0.0.1:8000/users/")!
-    var merchURL = URL(string: "http://127.0.0.1:8000/merch/")!
-    var orderURL = URL(string: "http://127.0.0.1:8000/orders/")!
+    //debugging
+//    var userURL = URL(string: "http://127.0.0.1:8000/users/")!
+//    var merchURL = URL(string: "http://127.0.0.1:8000/merch/")!
+//    var orderURL = URL(string: "http://127.0.0.1:8000/orders/")!
+    
+
+    var userURL = URL(string: "http://35.245.166.234/users/")!
+    var merchURL = URL(string: "http://35.245.166.234/merch/")!
+    var orderURL = URL(string: "http://35.245.166.234/orders/")!
 
     //POST createUser
     //respond with user_id and user_name
@@ -276,7 +282,7 @@ class NetworkManager {
     
     //POST modify order by order_id
     func updateMerch(order_id:Int, picked_up: Bool, paid: Bool, completion: @escaping (Order) -> Void) {
-        let url = URL(string: "http://127.0.0.1:8000/orders/"+String(order_id))!
+        let url = URL(string: "http://35.245.166.234/orders/"+String(order_id))!
         var request=URLRequest(url: url)
         request.httpMethod="POST"
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")

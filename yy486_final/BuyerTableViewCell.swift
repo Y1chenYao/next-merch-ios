@@ -212,9 +212,6 @@ class BuyerTableViewCell: UITableViewCell {
                 
             }
         }
-        
-        
-        
     }
     
     required init?(coder: NSCoder) {
