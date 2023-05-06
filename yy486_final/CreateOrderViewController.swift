@@ -182,10 +182,38 @@ class CreateOrderViewController: UIViewController {
         setupConstraints()
     }
     
+    @objc func showAlertButtonTapped(_ customTitle: String, _ customMessage: String) {
+        let alert = UIAlertController(title: customTitle, message: customMessage, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @objc func saveAction() {
-//        let body = messageTextView.text!
-//        let poster = posterTextField.text!
-        print("create order not implemented")
+        let notes = noteField.text!
+        let n:Int? = Int(numberField.text!)
+        let merch_id = merch?.id
+
+        if let num = n, let mid = merch_id{
+            if(!notes.isEmpty){
+                NetworkManager.shared.createOrder(merch_id:mid, num:num, notes: notes) { (result:Result<Order, Error>) in
+                    switch result{
+                        case .success(_):
+                            DispatchQueue.main.async {
+                                self.showAlertButtonTapped("Success","Your order is successfully processed")
+                            }
+                        case .failure(_):
+                            DispatchQueue.main.async {
+                                self.showAlertButtonTapped("Failure","Error occurred on the server")
+                            }
+                        }
+                }
+            }else{
+                self.showAlertButtonTapped("Input error","Please fill in all fields")
+            }
+        }
+        else{
+            self.showAlertButtonTapped("Input error","Please enter a valid integer for number")
+        }
     }
     
 

@@ -26,6 +26,10 @@ class BuyerViewController: UIViewController{
     
     
     override func viewDidLoad() {
+        let order01 = Order(id:1, mid: 1, bid:1, notes:"first",num:1, pickedUp: false, paid: false)
+        let order02 = Order(id:2, mid: 2, bid:1, notes:"second",num:1, pickedUp: true, paid: true)
+        _ = [order01, order02]
+        
         super.viewDidLoad()
         view.backgroundColor = .white
         
@@ -70,18 +74,12 @@ class BuyerViewController: UIViewController{
     }
     
     func initiateData() {
-//        NetworkManager.shared.getAllMessages { messages in
-//            DispatchQueue.main.async {
-//                self.shownmerchData = messages
-//                self.merchTableView.reloadData()
-//            }
-//        }
-        
-        let order01 = Order(id:1, mid: 1, bid:1, notes:"first",num:1, pickedUp: false, paid: false)
-        let order02 = Order(id:2, mid: 2, bid:1, notes:"second",num:1, pickedUp: true, paid: true)
-        
-        self.shownOrderData = [order01, order02]
-        self.orderTableView.reloadData()
+        NetworkManager.shared.getOrderByBid(){ orders in
+            DispatchQueue.main.async {
+                self.shownOrderData = orders
+                self.orderTableView.reloadData()
+            }
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -89,15 +87,15 @@ class BuyerViewController: UIViewController{
     }
     
     @objc func refreshData() {
-//        NetworkManager.shared.getAllMerch { allMerch in
-//            DispatchQueue.main.async {
-//                self.shownMerchData = allMerch
-//                self.merchTableView.reloadData()
-//                self.refreshControl.endRefreshing()
-//            }
-//        }
+        NetworkManager.shared.getOrderByBid(){ orders in
+            DispatchQueue.main.async {
+                self.shownOrderData = orders
+                self.orderTableView.reloadData()
+            }
+        }
         self.refreshControl.endRefreshing()
     }
+    
 }
 
 extension BuyerViewController: UITableViewDelegate {

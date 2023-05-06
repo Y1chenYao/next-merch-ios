@@ -25,7 +25,7 @@ import Foundation
 //}
 
 struct Merch: Codable {
-    var id: Int?
+    var id: Int
     var sid: Int
     var name: String
     var generalType: String
@@ -36,5 +36,5 @@ struct Merch: Codable {
 }
 
 struct MerchResponse: Codable {
-    var multiMerch: [Merch]
+    var merch: [Merch]
 }

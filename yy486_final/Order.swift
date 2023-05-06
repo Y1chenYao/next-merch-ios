@@ -25,7 +25,7 @@ import Foundation
 //}
 
 struct Order: Codable {
-    var id: Int?
+    var id: Int
     var mid: Int
     var bid: Int
     var notes: String
@@ -35,5 +35,5 @@ struct Order: Codable {
 }
 
 struct OrderResponse: Codable {
-    var orders: [Order]
+    var order: [Order]
 }

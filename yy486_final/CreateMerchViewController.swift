@@ -34,6 +34,7 @@ class CreateMerchViewController: UIViewController {
     let priceLabel = UILabel()
     let priceField = TextFieldWithPadding()
     let genreLabel = UILabel()
+    let segmentItems = ["Food","Clothing","Show","Concert","Other"]
     let segmentControl = UISegmentedControl(items:["Food","Clothing","Show","Concert","Other"])
     let noteLabel = UILabel()
     let noteField = TextFieldWithPadding()
@@ -155,7 +156,7 @@ class CreateMerchViewController: UIViewController {
         
         descrView.font = UIFont.systemFont(ofSize: 14)
         descrView.translatesAutoresizingMaskIntoConstraints = false
-        descrView.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        descrView.text = ""
         descrView.isScrollEnabled = false
         descrView.isEditable = true
         descrView.backgroundColor = .clear
@@ -215,10 +216,46 @@ class CreateMerchViewController: UIViewController {
         setupConstraints()
     }
     
+    @objc func showAlertButtonTapped(_ customTitle: String, _ customMessage: String) {
+        let alert = UIAlertController(title: customTitle, message: customMessage, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    
     @objc func saveAction() {
-//        let body = descrView.text!
-//        let poster = posterTextField.text!
-        print("not implemented")
+        let name = merchField.text!
+        let p:Int? = Int(priceField.text!)
+        var general_type = "Other"
+        if (segmentControl.selectedSegmentIndex != -1){
+            general_type = segmentItems[segmentControl.selectedSegmentIndex]
+        }
+        let note = noteField.text!
+        let time = timeField.text!
+        let place = placeField.text!
+        let descr = descrView.text!
+
+        if let price = p{
+            if(!name.isEmpty && !note.isEmpty && !time.isEmpty && !place.isEmpty && !descr.isEmpty){
+                NetworkManager.shared.createMerch(price: price, name: name, general_type: general_type, description: descr, pick_up_time: time, pick_up_place: place) { (result:Result<Merch, Error>) in
+                    switch result{
+                        case .success(_):
+                            DispatchQueue.main.async {
+                                self.showAlertButtonTapped("Success","Your merch is successfully added to the market")
+                            }
+                        case .failure(_):
+                            DispatchQueue.main.async {
+                                self.showAlertButtonTapped("Failure","Error occurred on the server")
+                            }
+                        }
+                }
+            }else{
+                self.showAlertButtonTapped("Input error","Please fill in all fields")
+            }
+        }
+        else{
+            self.showAlertButtonTapped("Input error","Please enter a valid integer for price")
+        }
     }
     
 

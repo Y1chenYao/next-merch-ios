@@ -15,6 +15,7 @@ class LoginController: UIViewController{
     let mildPurple = UIColor(red: 0.77, green: 0.65, blue: 0.98, alpha: 1.00)
     let mint = UIColor(red: 0.45, green: 0.97, blue: 0.81, alpha: 1.00)
     let purple = UIColor(red: 0.44, green: 0.41, blue: 0.95, alpha: 1.00)
+    let serviceRed = UIColor(red: 0.97, green: 0.38, blue: 0.42, alpha: 1.00)
     
     let welcomeLabel01 = UILabel()
     let welcomeLabel02 = UILabel()
@@ -74,7 +75,7 @@ class LoginController: UIViewController{
         signupButton.setTitleColor(.white, for: .normal)
         signupButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
         signupButton.translatesAutoresizingMaskIntoConstraints = false
-        signupButton.addTarget(self, action: #selector(login), for: .touchUpInside)
+        signupButton.addTarget(self, action: #selector(signUp), for: .touchUpInside)
         signupButton.layer.cornerRadius = 15
         signupButton.layer.borderWidth = 1
         signupButton.layer.borderColor = UIColor.white.cgColor
@@ -84,9 +85,64 @@ class LoginController: UIViewController{
         
     }
     
+    @objc func showAlertButtonTapped(_ customTitle: String, _ customMessage: String) {
+        let alert = UIAlertController(title: customTitle, message: customMessage, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @objc func login(){
-        UserDefaults.standard.set(true, forKey: "login")
+        if let username = idField.text, let password = pwField.text{
+            if (!username.isEmpty && !password.isEmpty){
+                NetworkManager.shared.verifyUser(username: username, password:password) { (result: Result<User, Error>) in
+                    switch result{
+                    case .success(let user):
+                        DispatchQueue.main.async {
+                            UserDefaults.standard.set(true, forKey: "login")
+                            UserDefaults.standard.set(user.id, forKey: "uid")
+                            UserDefaults.standard.set(user.username, forKey:"username")
+                            self.switchView()
+                        }
+                    case .failure(_):
+                        DispatchQueue.main.async {
+                            self.showAlertButtonTapped("Login Failure","Wrong username + password combination")
+                        }
+                    }
+                }
+            }else{
+                self.showAlertButtonTapped("Oops","Please fill in both fields")
+            }
+        }
         
+    }
+    
+    @objc func signUp(){
+        if let username = idField.text, let password = pwField.text{
+            if (!username.isEmpty && !password.isEmpty){
+                NetworkManager.shared.createUser(username: username, password:password) { (result: Result<User, Error>) in
+                    switch result{
+                    case .success(let user):
+                        DispatchQueue.main.async {
+                            UserDefaults.standard.set(true, forKey: "login")
+                            UserDefaults.standard.set(user.id, forKey: "uid")
+                            UserDefaults.standard.set(user.username, forKey:"username")
+                            self.switchView()
+                        }
+                    case .failure(_):
+                        DispatchQueue.main.async {
+                            self.showAlertButtonTapped("Signup Failure","User name already taken")
+                        }
+                    }
+                }
+            }else{
+                self.showAlertButtonTapped("Oops","Please fill in both fields")
+            }
+            
+        }
+    }
+       
+    
+    func switchView(){
         //this is super inefficient but I don't know what else to do :<
         let purple = UIColor(red: 0.44, green: 0.41, blue: 0.95, alpha: 1.00)
         let tabBarController = UITabBarController()
@@ -101,6 +157,7 @@ class LoginController: UIViewController{
         tabBarController.viewControllers = [vc1, vc2]
         self.view.window!.rootViewController = UINavigationController(rootViewController: tabBarController)
     }
+    
     
     func setupConstraints() {
         NSLayoutConstraint.activate([

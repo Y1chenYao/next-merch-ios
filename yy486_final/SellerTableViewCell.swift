@@ -20,6 +20,7 @@ class SellerTableViewCell: UITableViewCell {
     let statusLabel04 = UILabel()
     let paymentButton = UIButton()
     let pickupButton = UIButton()
+    var oid = -1
     
     //palatte
     let purple = UIColor(red: 0.44, green: 0.41, blue: 0.95, alpha: 1.00)
@@ -133,12 +134,19 @@ class SellerTableViewCell: UITableViewCell {
     }
     
     @objc func updatePayment(){
-        print("update payment not implemented")
+        NetworkManager.shared.updateMerch(order_id: oid, picked_up: false, paid: true){order in
+            DispatchQueue.main.async {
+            }
+        }
     }
     
     @objc func updatePickup(){
-        print("update pickup not implemented")
+        NetworkManager.shared.updateMerch(order_id: oid, picked_up: true, paid: false){order in
+            DispatchQueue.main.async {
+            }
+        }
     }
+    
     
     func setupConstraints() {
         let verticalPadding: CGFloat = 15.0
@@ -164,9 +172,11 @@ class SellerTableViewCell: UITableViewCell {
         ])
     }
     
+    
     func configure(orderObject: Order) {
         quantityLabel.text = "Quantity: "+String(orderObject.num)
         descrView.text = "Venmo: "+orderObject.notes
+        oid = orderObject.id
         if(orderObject.paid){
             statusLabel02.text = "Verified ✅"
             statusLabel02.textColor = serviceGreen
@@ -183,18 +193,12 @@ class SellerTableViewCell: UITableViewCell {
             statusLabel04.textColor = serviceRed
         }
         
-
-        
-        //TODO: add get request here by mid
-        //sample merch
-        let merchObject = Merch(id:1, sid: 1, name: "Matcha Cookie", generalType: "Food", description: "Matcha Cookies are soft and chewy sugar cookies with a beautiful bright matcha green tea flavor.", price: 3, pickupTime: "Apr30 1-5pm", pickupPlace: "Upson Hall")
-        if let idx = orderObject.id {
-            // Successfully converted String to Int
-            merchLabel.text = merchObject.name + " Order #" + String(idx)
-        }else{
-            merchLabel.text = merchObject.name + " Order #undefined"
+        NetworkManager.shared.getOneMerch(merch_id: orderObject.mid){ merch in
+            DispatchQueue.main.async {
+                self.merchLabel.text = merch.name + " Order #" + String(orderObject.id)
+                self.dateLabel.text = merch.pickupTime + " @ " + merch.pickupPlace
+            }
         }
-        dateLabel.text = merchObject.pickupTime + " @ " + merchObject.pickupPlace
     }
     
     required init?(coder: NSCoder) {

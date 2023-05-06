@@ -58,8 +58,6 @@ class AccountViewController: UIViewController {
         gradient.frame = view.bounds
         view.layer.addSublayer(gradient)
         
-        UserDefaults.standard.set("Ashton", forKey: "username") //placeholder
-        
         welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
         welcomeLabel.font = UIFont.systemFont(ofSize: 25, weight: .heavy)
         let name = UserDefaults.standard.string(forKey: "username")

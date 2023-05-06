@@ -20,7 +20,7 @@ class BuyerTableViewCell: UITableViewCell {
     let statusLabel02 = UILabel()
     let statusLabel03 = UILabel()
     let statusLabel04 = UILabel()
-    let deleteButton = UIButton()
+//    let deleteButton = UIButton()
     
     //palatte
     let purple = UIColor(red: 0.44, green: 0.41, blue: 0.95, alpha: 1.00)
@@ -111,18 +111,18 @@ class BuyerTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(statusLabel03)
         stackView.addArrangedSubview(statusLabel04)
         
-        deleteButton.setTitle("Cancel", for: .normal)
-        deleteButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        deleteButton.setTitleColor(serviceRed, for: .normal)
-        deleteButton.backgroundColor = .white
-        deleteButton.layer.borderWidth = 1
-        deleteButton.layer.borderColor = serviceRed.cgColor
-        deleteButton.translatesAutoresizingMaskIntoConstraints = false
-        deleteButton.layer.cornerRadius = 10
-        deleteButton.addTarget(self, action: #selector(deleteOrder), for: .touchUpInside)
+//        deleteButton.setTitle("Cancel", for: .normal)
+//        deleteButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+//        deleteButton.setTitleColor(serviceRed, for: .normal)
+//        deleteButton.backgroundColor = .white
+//        deleteButton.layer.borderWidth = 1
+//        deleteButton.layer.borderColor = serviceRed.cgColor
+//        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+//        deleteButton.layer.cornerRadius = 10
+//        deleteButton.addTarget(self, action: #selector(deleteOrder), for: .touchUpInside)
         
         contentView.addSubview(stackView)
-        contentView.addSubview(deleteButton)
+//        contentView.addSubview(deleteButton)
     }
     
     func setupConstraints() {
@@ -136,11 +136,11 @@ class BuyerTableViewCell: UITableViewCell {
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -100)
         ])
         
-        NSLayoutConstraint.activate([
-            deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            deleteButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -42),
-            deleteButton.widthAnchor.constraint(equalToConstant: 100)
-        ])
+//        NSLayoutConstraint.activate([
+//            deleteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+//            deleteButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -42),
+//            deleteButton.widthAnchor.constraint(equalToConstant: 100)
+//        ])
     }
     
     @objc func deleteOrder(){
@@ -166,52 +166,55 @@ class BuyerTableViewCell: UITableViewCell {
         }
 
         
-        //TODO: add get request here by mid
-        let merchObject = Merch(id:1, sid: 1, name: "Matcha Cookie", generalType: "Food", description: "Matcha Cookies are soft and chewy sugar cookies with a beautiful bright matcha green tea flavor.", price: 3, pickupTime: "Apr30 1-5pm", pickupPlace: "Upson Hall")
+        NetworkManager.shared.getOneMerch(merch_id: orderObject.mid){ merch in
+            DispatchQueue.main.async {
+                let merchObject = merch
+                
+                //render order with merch info
+                self.merchLabel.text = merchObject.name + " Order #" + String(orderObject.id)
+            
+                let threshold = 140
+                if(merchObject.description.count>threshold){
+                    self.descrView.text = String(merchObject.description.prefix(threshold))+" ..."
+                }else{
+                    self.descrView.text = merchObject.description
+                }
+                self.dateLabel.text = merchObject.pickupTime + " @ " + merchObject.pickupPlace
+                let generalType = merchObject.generalType
+                
+                switch generalType {
+                case "Food":
+                    let imageView = UIImageView(frame: CGRect(x: 240, y: 20, width: 170, height: 170))
+                    let image = UIImage(named: "svg1")
+                    imageView.image = image
+                    self.contentView.addSubview(imageView)
+                case "Clothing":
+                    let imageView = UIImageView(frame: CGRect(x: 240, y: 20, width: 170, height: 170))
+                    let image = UIImage(named: "svg2")
+                    imageView.image = image
+                    self.contentView.addSubview(imageView)
+                case "Ticket":
+                    let imageView = UIImageView(frame: CGRect(x: 240, y: 20, width: 170, height: 170))
+                    let image = UIImage(named: "svg3")
+                    imageView.image = image
+                    self.contentView.addSubview(imageView)
+                case "Concert":
+                    let imageView = UIImageView(frame: CGRect(x: 230, y: 30, width: 250, height: 170))
+                    let image = UIImage(named: "svg4")
+                    imageView.image = image
+                    self.contentView.addSubview(imageView)
+                default:
+                    let imageView = UIImageView(frame: CGRect(x: 225, y: 35, width: 210, height: 145))
+                    let image = UIImage(named: "svg5")
+                    imageView.image = image
+                    self.contentView.addSubview(imageView)
+                }
+                
+            }
+        }
         
         
-        //render order with merch info
-        if let idx = orderObject.id {
-            merchLabel.text = merchObject.name + " Order #" + String(idx)
-        }else{
-            merchLabel.text = merchObject.name + " Order #undefined"
-        }
-        let threshold = 140
-        if(merchObject.description.count>threshold){
-            descrView.text = String(merchObject.description.prefix(threshold))+" ..."
-        }else{
-            descrView.text = merchObject.description
-        }
-        dateLabel.text = merchObject.pickupTime + " @ " + merchObject.pickupPlace
-        generalType = merchObject.generalType
         
-        switch generalType {
-        case "Food":
-            let imageView = UIImageView(frame: CGRect(x: 240, y: 20, width: 170, height: 170))
-            let image = UIImage(named: "svg1")
-            imageView.image = image
-            contentView.addSubview(imageView)
-        case "Clothing":
-            let imageView = UIImageView(frame: CGRect(x: 240, y: 20, width: 170, height: 170))
-            let image = UIImage(named: "svg2")
-            imageView.image = image
-            contentView.addSubview(imageView)
-        case "Ticket":
-            let imageView = UIImageView(frame: CGRect(x: 240, y: 20, width: 170, height: 170))
-            let image = UIImage(named: "svg3")
-            imageView.image = image
-            contentView.addSubview(imageView)
-        case "Concert":
-            let imageView = UIImageView(frame: CGRect(x: 230, y: 30, width: 250, height: 170))
-            let image = UIImage(named: "svg4")
-            imageView.image = image
-            contentView.addSubview(imageView)
-        default:
-            let imageView = UIImageView(frame: CGRect(x: 225, y: 35, width: 210, height: 145))
-            let image = UIImage(named: "svg5")
-            imageView.image = image
-            contentView.addSubview(imageView)
-        }
     }
     
     required init?(coder: NSCoder) {
