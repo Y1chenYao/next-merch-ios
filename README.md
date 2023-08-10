@@ -1,4 +1,7 @@
 # next-merch-ios
+<p align="center">
+<img src="https://github.com/Y1chenYao/next-merch-ios/assets/68068854/88a32177-9c9f-406e-82dd-b148a6e01cd1" alt="drawing" style="width:150px;"/>
+</p>
 
 ### Merch ordering app
 
