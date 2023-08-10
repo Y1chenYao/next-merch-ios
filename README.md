@@ -3,7 +3,7 @@
 <img src="https://github.com/Y1chenYao/next-merch-ios/assets/68068854/88a32177-9c9f-406e-82dd-b148a6e01cd1" alt="drawing" style="width:150px;"/>
 </p>
 
-### Merch ordering app
+## A merch ordering app ...
 
 Usually in clubs, it is super hard to keep track of the merch that people want. 
 
@@ -13,12 +13,12 @@ The sellers will manually check off the orders if he/she receive the money on Ve
 
 PS: The app idea is inspired when I was selling matcha cookies made by my friends in the project team and I. :)
 
-### Demo
-Watch the video demo here: https://www.youtube.com/watch?v=GEMphaXigss
+## Demo
+Watch the video demo of `Next Merch`: https://www.youtube.com/watch?v=GEMphaXigss
 
 ![Component 1](https://github.com/Y1chenYao/next-merch-ios/assets/68068854/374e8fc8-27d0-4939-ac8c-d12bfddea06f)
 
-### Backend API
+## Backend API
 Repo can be found here: https://github.com/cap337/hack-challenge_SP2023-
 
 |request|endpoint |header/request body|return|
